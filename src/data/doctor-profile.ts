@@ -26,13 +26,22 @@ export interface DoctorProfile {
 export const doctorProfile: DoctorProfile = {
   name: "Dr. Manjinder Sandhu",
   title: "Senior Interventional Cardiologist & Principal Director – Cardiology",
+<<<<<<< HEAD
   affiliation: "Atrius Cardiac Care & Fortis Healthcare",
+=======
+  affiliation: "Fortis Healthcare",
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
   experienceYears: 33,
   patientsTreated: "70,000+",
   proceduresDone: "25,000+",
   cathLabAccess: "Advanced 24/7 Dual-Plane Cath Lab",
+<<<<<<< HEAD
   bioShort: "Principal Director – Cardiology at Atrius Cardiac Care with 33+ years of distinguished clinical expertise in complex coronary angioplasty, TAVR/TAVI, radial interventions, and structural heart procedures.",
   bioFull: "Dr. Manjinder Sandhu is a world-renowned Senior Interventional Cardiologist with over 33 years of experience pioneering advanced cardiovascular therapies in India. As Principal Director – Cardiology at Atrius Cardiac Care and Fortis Hospitals, Dr. Sandhu has successfully performed over 25,000 interventional cardiac procedures, specializing in Transcatheter Aortic Valve Replacement (TAVR), Complex Radial Coronary Angioplasty, Pacemaker Implants, and Endovascular Aortic Repair (EVAR).\n\nAn alumnus of AFMC Pune and PGIMER Chandigarh, Dr. Sandhu served with distinction in the Indian Armed Forces Medical Services before transitioning to lead cardiac departments at top premier super-specialty hospitals.",
+=======
+  bioShort: "Principal Director – Cardiology with 33+ years of experience in complex coronary angioplasty, TAVR/TAVI, radial interventions, and structural heart procedures.",
+  bioFull: "Dr. Manjinder Sandhu is a Senior Interventional Cardiologist with over 33 years of experience in advanced cardiovascular therapies in India. As Principal Director – Cardiology, Dr. Sandhu has performed over 25,000 interventional cardiac procedures, specializing in Transcatheter Aortic Valve Replacement (TAVR), Complex Radial Coronary Angioplasty, Pacemaker Implants, and Endovascular Aortic Repair (EVAR).\n\nAn alumnus of AFMC Pune and PGIMER Chandigarh, Dr. Sandhu served in the Indian Armed Forces Medical Services before leading specialist cardiac teams.",
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
   qualifications: [
     "MBBS — Armed Forces Medical College (AFMC), Pune",
     "MD (General Medicine) — Armed Forces Medical College (AFMC), Pune",
@@ -53,8 +62,13 @@ export const doctorProfile: DoctorProfile = {
     {
       period: "2023 – Present",
       role: "Principal Director – Cardiology",
+<<<<<<< HEAD
       institution: "Atrius Cardiac Care & Fortis Hospitals (Gurugram / Manesar / Delhi)",
       highlights: "Co-founded Atrius Cardiac Care to deliver boutique, patient-centric tertiary cardiac care across 4 premier hospital centers."
+=======
+      institution: "Cardiology practice across Gurugram, Manesar & Delhi",
+      highlights: "Provides specialist cardiac care across four hospital locations."
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
     },
     {
       period: "2013 – 2023",

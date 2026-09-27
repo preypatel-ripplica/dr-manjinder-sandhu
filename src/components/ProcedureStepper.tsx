@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+<<<<<<< HEAD
+=======
+import { usePanelMotion } from "@/hooks/usePanelMotion";
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
 import { CheckCircle2, Clock, Check, Calendar, ArrowRight, ShieldCheck } from "lucide-react";
 import { ProcedureStage } from "@/data/procedures";
 import { BookingModal } from "./BookingModal";
@@ -17,6 +21,10 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
   const [activeStageIndex, setActiveStageIndex] = useState<number>(0);
   const [bookingModalOpen, setBookingModalOpen] = useState<boolean>(false);
 
+<<<<<<< HEAD
+=======
+  const panelRef = usePanelMotion(activeStageIndex);
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
   const activeStage = stages[activeStageIndex];
 
   return (
@@ -40,14 +48,22 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
         border: "1px solid var(--border-color)"
       }}>
         <div style={{
+<<<<<<< HEAD
           fontSize: "0.75rem",
+=======
+          fontSize: "0.875rem",
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
           fontWeight: 700,
           color: "var(--primary-tag-text)",
           textTransform: "uppercase",
           letterSpacing: "0.05em",
           marginBottom: "1rem"
         }}>
+<<<<<<< HEAD
           7-STAGE WALKTHROUGH RAIL
+=======
+          YOUR PROCEDURE, STEP BY STEP
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -58,6 +74,10 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
             return (
               <button
                 key={stage.stageNumber}
+<<<<<<< HEAD
+=======
+                aria-pressed={isActive}
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
                 onClick={() => setActiveStageIndex(idx)}
                 style={{
                   display: "flex",
@@ -69,7 +89,11 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
                   backgroundColor: isActive ? "var(--primary-light)" : "transparent",
                   color: isActive ? "var(--primary)" : isCompleted ? "var(--secondary)" : "var(--text-muted)",
                   fontWeight: isActive ? 700 : 500,
+<<<<<<< HEAD
                   fontSize: "0.875rem",
+=======
+                  fontSize: "1rem",
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
                   textAlign: "left",
                   cursor: "pointer",
                   transition: "all 0.2s ease",
@@ -85,7 +109,11 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+<<<<<<< HEAD
                   fontSize: "0.75rem",
+=======
+                  fontSize: "0.875rem",
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
                   fontWeight: 700,
                   flexShrink: 0
                 }}>
@@ -102,11 +130,19 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
       </div>
 
       {/* Right Content Panel for Active Stage */}
+<<<<<<< HEAD
       <div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "1.25rem", borderBottom: "1px solid var(--border-color)", paddingBottom: "1rem" }}>
           <div>
             <span className="eyebrow-pill" style={{ marginBottom: "0.4rem" }}>
               STAGE {activeStage.stageNumber} OF 7 • {activeStage.stageName.toUpperCase()}
+=======
+      <div ref={panelRef} aria-live="polite">
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "1.25rem", borderBottom: "1px solid var(--border-color)", paddingBottom: "1rem" }}>
+          <div>
+            <span className="eyebrow-pill" style={{ marginBottom: "0.4rem" }}>
+              STAGE {activeStage.stageNumber} OF {stages.length} • {activeStage.stageName.toUpperCase()}
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
             </span>
             <h3 style={{ fontSize: "1.5rem", color: "var(--secondary)" }}>
               {activeStage.title}
@@ -121,7 +157,11 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
             color: "var(--primary)",
             padding: "0.4rem 0.9rem",
             borderRadius: "var(--radius-pill)",
+<<<<<<< HEAD
             fontSize: "0.825rem",
+=======
+            fontSize: "1rem",
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
             fontWeight: 700
           }}>
             <Clock size={15} />
@@ -134,7 +174,11 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
           <h4 style={{ fontSize: "1rem", color: "var(--secondary)", marginBottom: "0.4rem" }}>
             What to Expect in this Phase:
           </h4>
+<<<<<<< HEAD
           <p style={{ color: "var(--text-body)", fontSize: "0.95rem", lineHeight: 1.6 }}>
+=======
+          <p style={{ color: "var(--text-body)", fontSize: "1rem", lineHeight: 1.6 }}>
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
             {activeStage.whatToExpect}
           </p>
         </div>
@@ -147,13 +191,21 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
           padding: "1.5rem",
           marginBottom: "2rem"
         }}>
+<<<<<<< HEAD
           <h4 style={{ fontSize: "0.95rem", color: "var(--secondary)", fontWeight: 700, marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+=======
+          <h4 style={{ fontSize: "1rem", color: "var(--secondary)", fontWeight: 700, marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
             <ShieldCheck size={18} style={{ color: "var(--primary)" }} /> Key Points & Clinical Checklist:
           </h4>
 
           <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.65rem" }}>
             {activeStage.keyPoints.map((pt, i) => (
+<<<<<<< HEAD
               <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", fontSize: "0.875rem", color: "var(--secondary)" }}>
+=======
+              <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", fontSize: "1rem", color: "var(--secondary)" }}>
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
                 <CheckCircle2 size={16} style={{ color: "var(--primary)", flexShrink: 0, marginTop: "2px" }} />
                 <span>{pt}</span>
               </li>
@@ -194,7 +246,11 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
           <button
             onClick={() => setBookingModalOpen(true)}
             className="btn-secondary"
+<<<<<<< HEAD
             style={{ padding: "0.65rem 1.25rem", fontSize: "0.875rem" }}
+=======
+            style={{ padding: "0.65rem 1.25rem", fontSize: "1rem" }}
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
           >
             <Calendar size={15} /> Ask Procedure Details
           </button>

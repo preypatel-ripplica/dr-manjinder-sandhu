@@ -78,7 +78,11 @@ export const IVUSComparisonSlider: React.FC = () => {
               <h4 style={{ color: "#ffffff", fontSize: "1.25rem", marginBottom: "0.4rem" }}>
                 3D IVUS Cross-Sectional Arterial Scan
               </h4>
+<<<<<<< HEAD
               <p style={{ fontSize: "0.85rem", color: "#9ca3af" }}>
+=======
+              <p style={{ fontSize: "1rem", color: "#9ca3af" }}>
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
                 360° Wall Thickness • Exact Plaque Calcification • Stent Sizing
               </p>
             </div>
@@ -117,7 +121,11 @@ export const IVUSComparisonSlider: React.FC = () => {
               <h4 style={{ color: "#ffffff", fontSize: "1.25rem", marginBottom: "0.4rem", whiteSpace: "nowrap" }}>
                 Standard 2D Angiogram
               </h4>
+<<<<<<< HEAD
               <p style={{ fontSize: "0.85rem", color: "#9ca3af", whiteSpace: "nowrap" }}>
+=======
+              <p style={{ fontSize: "1rem", color: "#9ca3af", whiteSpace: "nowrap" }}>
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
                 Flat Shadow Projection • Limited Calcium Depth Detail
               </p>
             </div>
@@ -129,7 +137,11 @@ export const IVUSComparisonSlider: React.FC = () => {
               left: "12px",
               backgroundColor: "rgba(0, 0, 0, 0.7)",
               color: "#ffffff",
+<<<<<<< HEAD
               fontSize: "0.725rem",
+=======
+              fontSize: "0.875rem",
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
               fontWeight: 700,
               padding: "0.25rem 0.6rem",
               borderRadius: "var(--radius-pill)",
@@ -144,7 +156,11 @@ export const IVUSComparisonSlider: React.FC = () => {
               right: "12px",
               backgroundColor: "var(--primary)",
               color: "#ffffff",
+<<<<<<< HEAD
               fontSize: "0.725rem",
+=======
+              fontSize: "0.875rem",
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
               fontWeight: 700,
               padding: "0.25rem 0.6rem",
               borderRadius: "var(--radius-pill)"
@@ -193,7 +209,11 @@ export const IVUSComparisonSlider: React.FC = () => {
             </div>
           </div>
 
+<<<<<<< HEAD
           <p style={{ fontSize: "0.825rem", color: "var(--text-muted)", textAlign: "center", marginTop: "0.75rem" }}>
+=======
+          <p style={{ fontSize: "1rem", color: "var(--text-muted)", textAlign: "center", marginTop: "0.75rem" }}>
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
             ↔ Drag or click slider to compare standard 2D view with 3D IVUS high-definition imaging.
           </p>
         </div>
@@ -203,11 +223,16 @@ export const IVUSComparisonSlider: React.FC = () => {
           <h3 style={{ fontSize: "1.5rem", color: "var(--secondary)", marginBottom: "1rem" }}>
             Unmatched Precision for Complex Stenting
           </h3>
+<<<<<<< HEAD
           <p style={{ color: "var(--text-body)", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+=======
+          <p style={{ color: "var(--text-body)", fontSize: "1rem", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
             Dr. Manjinder Sandhu uses Intravascular Ultrasound (IVUS) and Optical Coherence Tomography (OCT) during angioplasty to measure exact artery diameter, detect hidden calcium, and verify perfect stent placement.
           </p>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", marginBottom: "1.75rem" }}>
+<<<<<<< HEAD
             <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", fontSize: "0.9rem", color: "var(--secondary)" }}>
               <CheckCircle2 size={18} style={{ color: "var(--primary)", flexShrink: 0, marginTop: "2px" }} />
               <span><strong>Precise Stent Sizing:</strong> Eliminates under-expansion and reduces long-term restenosis risk.</span>
@@ -217,6 +242,17 @@ export const IVUSComparisonSlider: React.FC = () => {
               <span><strong>Rotablator & IVL Guidance:</strong> Accurately quantifies calcium depth before stenting.</span>
             </div>
             <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", fontSize: "0.9rem", color: "var(--secondary)" }}>
+=======
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", fontSize: "1rem", color: "var(--secondary)" }}>
+              <CheckCircle2 size={18} style={{ color: "var(--primary)", flexShrink: 0, marginTop: "2px" }} />
+              <span><strong>Precise Stent Sizing:</strong> Eliminates under-expansion and reduces long-term restenosis risk.</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", fontSize: "1rem", color: "var(--secondary)" }}>
+              <CheckCircle2 size={18} style={{ color: "var(--primary)", flexShrink: 0, marginTop: "2px" }} />
+              <span><strong>Rotablator & IVL Guidance:</strong> Accurately quantifies calcium depth before stenting.</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", fontSize: "1rem", color: "var(--secondary)" }}>
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
               <CheckCircle2 size={18} style={{ color: "var(--primary)", flexShrink: 0, marginTop: "2px" }} />
               <span><strong>Superior Clinical Outcomes:</strong> Backed by global randomized trials showing lower cardiac events.</span>
             </div>

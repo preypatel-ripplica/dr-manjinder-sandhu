@@ -30,9 +30,13 @@ export const testimonials: Testimonial[] = [
     date: "July 2026",
     source: "Verified Patient",
     text: "When my mother was diagnosed with severe aortic valve stenosis, we were terrified. Dr. Sandhu explained the TAVR procedure so calmly and answered all our doubts. The TAVR surgery took less than an hour without any chest opening. She is now active and energetic!",
+<<<<<<< HEAD
     procedureTag: "TAVR Valve Replacement",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     thumbnail: "/images/video-thumb-1.jpg"
+=======
+    procedureTag: "TAVR Valve Replacement"
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
   },
   {
     id: "rev3",
@@ -41,7 +45,11 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     date: "June 2026",
     source: "Google Review",
+<<<<<<< HEAD
     text: "Extremely professional, highly ethical, and deeply caring doctor. Dr. Sandhu implanted a dual-chamber pacemaker for my heart block. His post-op guidance and follow-up clinical protocol at Atrius Cardiac Care are commendable.",
+=======
+    text: "Extremely professional, highly ethical, and deeply caring doctor. Dr. Sandhu implanted a dual-chamber pacemaker for my heart block. His post-op guidance and follow-up clinical protocol are commendable.",
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
     procedureTag: "Pacemaker Implantation"
   },
   {
@@ -51,7 +59,11 @@ export const testimonials: Testimonial[] = [
     rating: 5,
     date: "May 2026",
     source: "Google Review",
+<<<<<<< HEAD
     text: "Dr. Sandhu is an absolute master of complex radial angioplasty. He opened a 100% blocked calcified artery that another hospital had declared un-stentable. Truly grateful to him and his team at Atrius Cardiac Care.",
+=======
+    text: "Dr. Sandhu is an absolute master of complex radial angioplasty. He opened a 100% blocked calcified artery that another hospital had declared un-stentable. Truly grateful to him and his team.",
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
     procedureTag: "Complex CTO Stenting"
   }
 ];

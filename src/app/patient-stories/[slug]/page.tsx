@@ -24,7 +24,11 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
 
   return (
     <div>
+<<<<<<< HEAD
       <section style={{ backgroundColor: "var(--bg-soft)", padding: "4rem 0", borderBottom: "1px solid var(--border-color)" }}>
+=======
+      <section className="page-intro">
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
         <div className="container-custom">
           <div style={{ maxWidth: "800px" }}>
             <span className="eyebrow-pill" style={{ marginBottom: "0.75rem" }}>
@@ -49,7 +53,11 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
 
           <div style={{ backgroundColor: "var(--bg-soft)", padding: "1.5rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", marginBottom: "2rem" }}>
             <h3 style={{ fontSize: "1.1rem", color: "var(--secondary)", marginBottom: "0.5rem" }}>Primary Anatomical Challenge</h3>
+<<<<<<< HEAD
             <p style={{ fontSize: "0.95rem", color: "var(--text-body)" }}>{caseItem.keyChallenge}</p>
+=======
+            <p style={{ fontSize: "1rem", color: "var(--text-body)" }}>{caseItem.keyChallenge}</p>
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
           </div>
 
           <div style={{ marginBottom: "2rem" }}>

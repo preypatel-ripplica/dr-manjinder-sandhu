@@ -30,3 +30,7 @@ yarn-error.log*
 # documentation & PRD
 PRD_Phase_1_Dr_Manjinder_Sandhu_Rebuild.md
 !README.md
+
+.env
+.env.*
+!.env.example

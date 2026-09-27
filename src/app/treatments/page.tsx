@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import React, { useState } from "react";
@@ -25,10 +26,26 @@ export default function TreatmentsIndexPage() {
 
       {/* Main Filterable Grid Section */}
       <section className="section-padding" style={{ backgroundColor: "var(--bg-page)" }}>
+=======
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { TreatmentsFilterGrid } from "@/components/TreatmentsFilterGrid";
+import { VisualIntro } from "@/components/VisualIntro";
+export default function TreatmentsIndexPage() {
+  return (
+    <div>
+      <VisualIntro
+        label="SPECIALIST HEART CARE"
+        title="The right care, for you."
+        description="Explore preventive care, heart investigations, and specialist treatments. Your consultation helps determine which approach is right for you."
+      />
+      <section className="section-padding">
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
         <div className="container-custom">
           <TreatmentsFilterGrid />
         </div>
       </section>
+<<<<<<< HEAD
 
       {/* Bottom CTA Band */}
       <section style={{ backgroundColor: "var(--secondary)", color: "#ffffff", padding: "3.5rem 0", textAlign: "center" }}>
@@ -46,6 +63,19 @@ export default function TreatmentsIndexPage() {
       </section>
 
       <BookingModal isOpen={bookingModalOpen} onClose={() => setBookingModalOpen(false)} />
+=======
+      <section className="simple-cta">
+        <div className="container-custom">
+          <div>
+            <h2>Let’s talk about your options.</h2>
+            <p>Get personal advice or a second opinion from Dr. Sandhu.</p>
+          </div>
+          <Link className="btn-primary" href="/contact-us">
+            Book appointment <ArrowUpRight size={17} />
+          </Link>
+        </div>
+      </section>
+>>>>>>> ea53e95 (Update website design, SEO files, and content)
     </div>
   );
 }
