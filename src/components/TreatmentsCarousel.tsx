@@ -41,11 +41,7 @@ export const TreatmentsCarousel: React.FC = () => {
           </h2>
         </div>
 
-<<<<<<< HEAD
-        <p style={{ color: "var(--text-body)", fontSize: "0.95rem", maxWidth: "520px" }}>
-=======
         <p style={{ color: "var(--text-body)", fontSize: "1rem", maxWidth: "520px" }}>
->>>>>>> ea53e95 (Update website design, SEO files, and content)
           Clear interventional care pathways for common heart concerns, from initial ECG diagnostic evaluation to wrist stenting, valve replacement, and long-term recovery.
         </p>
       </div>
@@ -79,11 +75,7 @@ export const TreatmentsCarousel: React.FC = () => {
           >
             <div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
-<<<<<<< HEAD
-                <span className="eyebrow-pill" style={{ fontSize: "0.675rem" }}>
-=======
                 <span className="eyebrow-pill" style={{ fontSize: "0.875rem" }}>
->>>>>>> ea53e95 (Update website design, SEO files, and content)
                   {item.category.toUpperCase()} CARDIOLOGY
                 </span>
                 <div style={{
@@ -104,30 +96,18 @@ export const TreatmentsCarousel: React.FC = () => {
                 {item.title}
               </h3>
 
-<<<<<<< HEAD
-              <p style={{ color: "var(--primary)", fontSize: "0.85rem", fontWeight: 600, marginBottom: "1rem" }}>
-                {item.tagline}
-              </p>
-
-              <p style={{ color: "var(--text-body)", fontSize: "0.875rem", lineHeight: 1.5, marginBottom: "1.25rem" }}>
-=======
               <p style={{ color: "var(--primary)", fontSize: "1rem", fontWeight: 600, marginBottom: "1rem" }}>
                 {item.tagline}
               </p>
 
               <p style={{ color: "var(--text-body)", fontSize: "1rem", lineHeight: 1.5, marginBottom: "1.25rem" }}>
->>>>>>> ea53e95 (Update website design, SEO files, and content)
                 {item.shortDescription}
               </p>
 
               <div style={{ borderTop: "1px solid var(--border-color)", paddingTop: "1rem", marginBottom: "1.25rem" }}>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                   {item.benefits.slice(0, 2).map((b, i) => (
-<<<<<<< HEAD
-                    <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.4rem", fontSize: "0.825rem", color: "var(--text-body)" }}>
-=======
                     <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.4rem", fontSize: "1rem", color: "var(--text-body)" }}>
->>>>>>> ea53e95 (Update website design, SEO files, and content)
                       <CheckCircle2 size={14} style={{ color: "var(--primary)", flexShrink: 0, marginTop: "2px" }} />
                       <span>{b}</span>
                     </li>
@@ -139,11 +119,7 @@ export const TreatmentsCarousel: React.FC = () => {
             <Link
               href={`/treatments/${item.slug}`}
               className={item.isCenter ? "btn-primary" : "btn-outline"}
-<<<<<<< HEAD
-              style={{ width: "100%", justifyContent: "center", padding: "0.75rem", fontSize: "0.875rem" }}
-=======
               style={{ width: "100%", justifyContent: "center", padding: "0.75rem", fontSize: "1rem" }}
->>>>>>> ea53e95 (Update website design, SEO files, and content)
             >
               <span>Explore Treatment</span>
               <ArrowRight size={15} />

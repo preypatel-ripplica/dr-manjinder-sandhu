@@ -5,14 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-<<<<<<< HEAD
-    "start": "next start",
-    "lint": "next lint"
-=======
     "start": "node scripts/serve.mjs",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit"
->>>>>>> ea53e95 (Update website design, SEO files, and content)
   },
   "dependencies": {
     "next": "^15.1.0",

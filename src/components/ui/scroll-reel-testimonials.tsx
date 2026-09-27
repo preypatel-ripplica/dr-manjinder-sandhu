@@ -361,11 +361,7 @@ export function ScrollReelTestimonials({
               </p>
               <p style={{
                 margin: 0,
-<<<<<<< HEAD
-                fontSize: "0.95rem",
-=======
                 fontSize: "1rem",
->>>>>>> ea53e95 (Update website design, SEO files, and content)
                 fontWeight: 700,
                 color: "var(--primary)"
               }}>
@@ -431,11 +427,7 @@ export function ScrollReelTestimonials({
             </svg>
           </button>
 
-<<<<<<< HEAD
-          <span style={{ fontSize: "0.85rem", color: "var(--text-muted)", fontWeight: 600, marginLeft: "0.5rem" }}>
-=======
           <span style={{ fontSize: "1rem", color: "var(--text-muted)", fontWeight: 600, marginLeft: "0.5rem" }}>
->>>>>>> ea53e95 (Update website design, SEO files, and content)
             {index + 1} of {count}
           </span>
         </div>
