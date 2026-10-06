@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "node scripts/serve.mjs",
     "lint": "tsc --noEmit",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "translate": "node scripts/translate.mjs",
+    "translate:dry-run": "node scripts/translate.mjs --dry-run",
+    "translate:shared": "node scripts/translate.mjs --scope=shared-ui,home,about,expertise,contact",
+    "translate:content": "node scripts/translate.mjs --scope=blogs,treatments,procedures,testimonials,video-gallery,patient-stories,consultation-plans"
   },
   "dependencies": {
     "next": "^15.1.0",

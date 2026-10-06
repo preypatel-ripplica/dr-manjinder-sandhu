@@ -34,3 +34,7 @@ PRD_Phase_1_Dr_Manjinder_Sandhu_Rebuild.md
 .env
 .env.*
 !.env.example
+
+# cache — translation memory MUST be committed; everything else in .cache/ is ignored
+.cache/*
+!.cache/translation-memory.json

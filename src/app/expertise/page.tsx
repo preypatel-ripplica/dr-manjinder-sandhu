@@ -1,7 +1,5 @@
-"use client";
-
 import { VisualIntro } from "@/components/VisualIntro";
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -9,12 +7,13 @@ import {
   Heart,
   Activity,
   Zap,
-  Stethoscope,
 } from "lucide-react";
-import { BookingModal } from "@/components/BookingModal";
+import { BookAppointmentButton } from "@/components/BookAppointmentButton";
+import { buildHreflang } from "@/lib/seo";
+
+export const metadata = buildHreflang("/expertise/");
 
 export default function ExpertisePage() {
-  const [bookingModalOpen, setBookingModalOpen] = useState(false);
 
   const pillars = [
     {
@@ -180,20 +179,9 @@ export default function ExpertisePage() {
             Get an evidence-based clinical evaluation in Gurugram, Manesar,
             and Delhi NCR.
           </p>
-          <button
-            onClick={() => setBookingModalOpen(true)}
-            className="btn-primary"
-            style={{ padding: "0.9rem 2rem" }}
-          >
-            Book Consultation Appointment
-          </button>
+          <BookAppointmentButton label="Book Consultation Appointment" />
         </div>
       </section>
-
-      <BookingModal
-        isOpen={bookingModalOpen}
-        onClose={() => setBookingModalOpen(false)}
-      />
     </div>
   );
 }

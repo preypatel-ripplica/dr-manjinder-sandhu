@@ -3,18 +3,22 @@
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { AppointmentForm } from "./AppointmentForm";
+import { useI18n } from "./I18nProvider";
 
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
   preSelectedPlan?: string;
 }
+
 export function BookingModal({
   isOpen,
   onClose,
   preSelectedPlan,
 }: BookingModalProps) {
   const dialog = useRef<HTMLDialogElement>(null);
+  const { t } = useI18n();
+
   useEffect(() => {
     const element = dialog.current;
     if (!isOpen || !element) return;
@@ -28,7 +32,9 @@ export function BookingModal({
       previousFocus?.focus();
     };
   }, [isOpen]);
+
   if (!isOpen) return null;
+
   return (
     <dialog
       ref={dialog}
@@ -68,14 +74,14 @@ export function BookingModal({
       <button
         className="dialog-close icon-button"
         onClick={onClose}
-        aria-label="Close appointment form"
+        aria-label={t("Close appointment form")}
       >
         <X size={20} />
       </button>
-      <span className="eyebrow-pill">LET’S PLAN YOUR VISIT</span>
-      <h2 id="booking-title">Book appointment</h2>
+      <span className="eyebrow-pill">{t("LET’S PLAN YOUR VISIT")}</span>
+      <h2 id="booking-title">{t("Book appointment")}</h2>
       <p className="dialog-intro">
-        With Dr. Manjinder Sandhu, at a location that works for you.
+        {t("With Dr. Manjinder Sandhu, at a location that works for you.")}
       </p>
       <AppointmentForm preSelectedPlan={preSelectedPlan} />
     </dialog>

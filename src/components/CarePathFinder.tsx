@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePanelMotion } from "@/hooks/usePanelMotion";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, RotateCcw } from "lucide-react";
+import { useI18n } from "./I18nProvider";
 
 type Choice = {
   title: string;
@@ -61,6 +62,8 @@ export function CarePathFinder() {
   const [step, setStep] = useState(1);
   const panelRef = usePanelMotion(step);
   const previousStep = useRef(step);
+  const { t, localizeHref } = useI18n();
+
   useEffect(() => {
     if (previousStep.current === step) return;
     previousStep.current = step;
@@ -68,13 +71,20 @@ export function CarePathFinder() {
     if (!heading) return;
     heading.focus({ preventScroll: true });
     const top = heading.getBoundingClientRect().top;
-    if (top < 140 || top > window.innerHeight * .65) {
-      heading.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+    if (top < 140 || top > window.innerHeight * 0.65) {
+      heading.scrollIntoView({
+        block: "start",
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      });
     }
   }, [step, panelRef]);
+
   const [startingPoint, setStartingPoint] = useState<Choice | null>(null);
   const [preference, setPreference] = useState<Choice | null>(null);
-  const recommendation = preference?.next || startingPoint?.next || "appointment";
+  const recommendation =
+    preference?.next || startingPoint?.next || "appointment";
 
   function reset() {
     setStep(1);
@@ -86,15 +96,17 @@ export function CarePathFinder() {
     <section className="care-path-section" aria-labelledby="care-path-heading">
       <div className="container-custom">
         <div className="care-path-heading">
-          <span className="eyebrow-pill">FIND YOUR STARTING POINT</span>
-          <h2 id="care-path-heading">Not sure which step feels right?</h2>
-          <p>A quick guide for finding the right conversation to have next.</p>
+          <span className="eyebrow-pill">{t("FIND YOUR STARTING POINT")}</span>
+          <h2 id="care-path-heading">{t("Not sure which step feels right?")}</h2>
+          <p>{t("A quick guide for finding the right conversation to have next.")}</p>
         </div>
         <div className="care-path-shell">
           <div className="care-path-topline">
-            <span>Step {step} of 3</span>
+            <span>
+              {t("Step")} {step} {t("of 3")}
+            </span>
             <button type="button" onClick={reset} className="care-path-reset">
-              <RotateCcw size={15} /> Start over
+              <RotateCcw size={15} /> {t("Start over")}
             </button>
           </div>
           <div className="care-path-progress" aria-hidden="true">
@@ -102,78 +114,101 @@ export function CarePathFinder() {
           </div>
 
           <div ref={panelRef} className="care-path-stage">
-          {step === 1 && (
-            <div className="care-path-content" key="starting-point">
-              <h3 tabIndex={-1}>What brings you here today?</h3>
-              <div className="care-path-options">
-                {startingPoints.map((choice) => (
-                  <button
-                    key={choice.title}
-                    type="button"
-                    aria-pressed={startingPoint?.title === choice.title}
-                    className={startingPoint?.title === choice.title ? "is-selected" : ""}
-                    onClick={() => setStartingPoint(choice)}
+            {step === 1 && (
+              <div className="care-path-content" key="starting-point">
+                <h3 tabIndex={-1}>{t("What brings you here today?")}</h3>
+                <div className="care-path-options">
+                  {startingPoints.map((choice) => (
+                    <button
+                      key={choice.title}
+                      type="button"
+                      aria-pressed={startingPoint?.title === choice.title}
+                      className={
+                        startingPoint?.title === choice.title
+                          ? "is-selected"
+                          : ""
+                      }
+                      onClick={() => setStartingPoint(choice)}
+                    >
+                      <strong>{t(choice.title)}</strong>
+                      <span>{t(choice.detail)}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {step === 2 && (
+              <div className="care-path-content" key="preference">
+                <h3 tabIndex={-1}>{t("What would help most right now?")}</h3>
+                <div className="care-path-options care-path-options-compact">
+                  {preferences.map((choice) => (
+                    <button
+                      key={choice.title}
+                      type="button"
+                      aria-pressed={preference?.title === choice.title}
+                      className={
+                        preference?.title === choice.title ? "is-selected" : ""
+                      }
+                      onClick={() => setPreference(choice)}
+                    >
+                      <strong>{t(choice.title)}</strong>
+                      <span>{t(choice.detail)}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {step === 3 && (
+              <div className="care-path-result" key="result" aria-live="polite">
+                <div>
+                  <span className="eyebrow-pill">{t("A helpful next step")}</span>
+                  <h3 tabIndex={-1}>
+                    {recommendation === "guide"
+                      ? t("Explore your care options.")
+                      : recommendation === "call"
+                        ? t("Speak with our appointment team.")
+                        : t("Let’s arrange a conversation.")}
+                  </h3>
+                  <p>
+                    {recommendation === "guide"
+                      ? t("Browse treatment information, then contact the appointment desk when you are ready to discuss your own care.")
+                      : recommendation === "call"
+                        ? t("Call the appointment desk for help with locations, availability and planning your visit.")
+                        : t("Send an appointment request and the team will help confirm the most suitable location and time.")}
+                  </p>
+                </div>
+                {recommendation === "guide" ? (
+                  <Link className="btn-primary" href={localizeHref("/treatments")}>
+                    {t("Explore treatments")} <ArrowUpRight size={18} />
+                  </Link>
+                ) : (
+                  <a
+                    className="btn-primary"
+                    href={
+                      recommendation === "call"
+                        ? "tel:+918130370096"
+                        : "#appointments"
+                    }
                   >
-                    <strong>{choice.title}</strong>
-                    <span>{choice.detail}</span>
-                  </button>
-                ))}
+                    {recommendation === "call"
+                      ? t("Call the team")
+                      : t("Book appointment")}{" "}
+                    <CalendarDays size={18} />
+                  </a>
+                )}
               </div>
-            </div>
-          )}
-
-          {step === 2 && (
-            <div className="care-path-content" key="preference">
-              <h3 tabIndex={-1}>What would help most right now?</h3>
-              <div className="care-path-options care-path-options-compact">
-                {preferences.map((choice) => (
-                  <button
-                    key={choice.title}
-                    type="button"
-                    aria-pressed={preference?.title === choice.title}
-                    className={preference?.title === choice.title ? "is-selected" : ""}
-                    onClick={() => setPreference(choice)}
-                  >
-                    <strong>{choice.title}</strong>
-                    <span>{choice.detail}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {step === 3 && (
-            <div className="care-path-result" key="result" aria-live="polite">
-              <div>
-                <span className="eyebrow-pill">A helpful next step</span>
-                <h3 tabIndex={-1}>
-                  {recommendation === "guide"
-                    ? "Explore your care options."
-                    : recommendation === "call" ? "Speak with our appointment team." : "Let’s arrange a conversation."}
-                </h3>
-                <p>
-                  {recommendation === "guide"
-                    ? "Browse treatment information, then contact the appointment desk when you are ready to discuss your own care."
-                    : recommendation === "call" ? "Call the appointment desk for help with locations, availability and planning your visit." : "Send an appointment request and the team will help confirm the most suitable location and time."}
-                </p>
-              </div>
-              {recommendation === "guide" ? (
-                <Link className="btn-primary" href="/treatments">
-                  Explore treatments <ArrowUpRight size={18} />
-                </Link>
-              ) : (
-                <a className="btn-primary" href={recommendation === "call" ? "tel:+918130370096" : "#appointments"}>
-                  {recommendation === "call" ? "Call the team" : "Book appointment"} <CalendarDays size={18} />
-                </a>
-              )}
-            </div>
-          )}
-
+            )}
           </div>
           <div className="care-path-actions">
             {step > 1 ? (
-              <button type="button" className="btn-outline" onClick={() => setStep(step - 1)}>
-                <ArrowLeft size={17} /> Back
+              <button
+                type="button"
+                className="btn-outline"
+                onClick={() => setStep(step - 1)}
+              >
+                <ArrowLeft size={17} /> {t("Back")}
               </button>
             ) : (
               <span />
@@ -185,7 +220,7 @@ export function CarePathFinder() {
                 disabled={step === 1 ? !startingPoint : !preference}
                 onClick={() => setStep(step + 1)}
               >
-                Continue <ArrowRight size={17} />
+                {t("Continue")} <ArrowRight size={17} />
               </button>
             )}
           </div>

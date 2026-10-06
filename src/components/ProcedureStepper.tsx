@@ -5,6 +5,7 @@ import { usePanelMotion } from "@/hooks/usePanelMotion";
 import { CheckCircle2, Clock, Check, Calendar, ArrowRight, ShieldCheck } from "lucide-react";
 import { ProcedureStage } from "@/data/procedures";
 import { BookingModal } from "./BookingModal";
+import { useI18n } from "./I18nProvider";
 
 interface ProcedureStepperProps {
   stages: ProcedureStage[];
@@ -15,6 +16,7 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
   stages,
   procedureTitle
 }) => {
+  const { t } = useI18n();
   const [activeStageIndex, setActiveStageIndex] = useState<number>(0);
   const [bookingModalOpen, setBookingModalOpen] = useState<boolean>(false);
 
@@ -49,7 +51,7 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
           letterSpacing: "0.05em",
           marginBottom: "1rem"
         }}>
-          YOUR PROCEDURE, STEP BY STEP
+          {t("YOUR PROCEDURE, STEP BY STEP")}
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -96,7 +98,7 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
                 </div>
 
                 <div style={{ flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                  {stage.stageName}
+                  {t(stage.stageName)}
                 </div>
               </button>
             );
@@ -109,10 +111,10 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "1.25rem", borderBottom: "1px solid var(--border-color)", paddingBottom: "1rem" }}>
           <div>
             <span className="eyebrow-pill" style={{ marginBottom: "0.4rem" }}>
-              STAGE {activeStage.stageNumber} OF {stages.length} • {activeStage.stageName.toUpperCase()}
+              {t("STAGE")} {activeStage.stageNumber} {t("OF")} {stages.length} • {t(activeStage.stageName.toUpperCase())}
             </span>
             <h3 style={{ fontSize: "1.5rem", color: "var(--secondary)" }}>
-              {activeStage.title}
+              {t(activeStage.title)}
             </h3>
           </div>
 
@@ -128,17 +130,17 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
             fontWeight: 700
           }}>
             <Clock size={15} />
-            <span>{activeStage.durationEstimate}</span>
+            <span>{t(activeStage.durationEstimate)}</span>
           </div>
         </div>
 
         {/* What to Expect Paragraph */}
         <div style={{ marginBottom: "1.75rem" }}>
           <h4 style={{ fontSize: "1rem", color: "var(--secondary)", marginBottom: "0.4rem" }}>
-            What to Expect in this Phase:
+            {t("What to Expect in this Phase:")}
           </h4>
           <p style={{ color: "var(--text-body)", fontSize: "1rem", lineHeight: 1.6 }}>
-            {activeStage.whatToExpect}
+            {t(activeStage.whatToExpect)}
           </p>
         </div>
 
@@ -151,14 +153,14 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
           marginBottom: "2rem"
         }}>
           <h4 style={{ fontSize: "1rem", color: "var(--secondary)", fontWeight: 700, marginBottom: "0.85rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <ShieldCheck size={18} style={{ color: "var(--primary)" }} /> Key Points & Clinical Checklist:
+            <ShieldCheck size={18} style={{ color: "var(--primary)" }} /> {t("Key Points & Clinical Checklist:")}
           </h4>
 
           <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.65rem" }}>
             {activeStage.keyPoints.map((pt, i) => (
               <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", fontSize: "1rem", color: "var(--secondary)" }}>
                 <CheckCircle2 size={16} style={{ color: "var(--primary)", flexShrink: 0, marginTop: "2px" }} />
-                <span>{pt}</span>
+                <span>{t(pt)}</span>
               </li>
             ))}
           </ul>
@@ -177,7 +179,7 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
                 cursor: activeStageIndex === 0 ? "not-allowed" : "pointer"
               }}
             >
-              Previous Stage
+              {t("Previous Stage")}
             </button>
 
             <button
@@ -190,7 +192,7 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
                 cursor: activeStageIndex === stages.length - 1 ? "not-allowed" : "pointer"
               }}
             >
-              Next Stage <ArrowRight size={15} />
+              {t("Next Stage")} <ArrowRight size={15} />
             </button>
           </div>
 
@@ -199,7 +201,7 @@ export const ProcedureStepper: React.FC<ProcedureStepperProps> = ({
             className="btn-secondary"
             style={{ padding: "0.65rem 1.25rem", fontSize: "1rem" }}
           >
-            <Calendar size={15} /> Ask Procedure Details
+            <Calendar size={15} /> {t("Ask Procedure Details")}
           </button>
         </div>
       </div>

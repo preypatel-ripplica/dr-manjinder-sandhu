@@ -1,25 +1,78 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowUpRight, Activity, Stethoscope, Check } from "lucide-react";
-import { treatments } from "@/data/treatments";
+import { getTreatments } from "@/lib/cms";
+import { treatments as localTreatments } from "@/data/treatments";
+import { buildHreflang } from "@/lib/seo";
+import type { Metadata } from "next";
 import { careVisuals } from "@/data/care-visuals";
 import { VisualIntro } from "@/components/VisualIntro";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { TransradialRecoveryTimeline } from "@/components/TransradialRecoveryTimeline";
-export function generateStaticParams() {
-  return treatments.map((t) => ({ slug: t.slug }));
+
+export async function generateStaticParams() {
+  const treatmentsList = await getTreatments().catch(() => localTreatments);
+  const map = new Map<string, string>();
+  localTreatments.forEach((t) => map.set(t.slug.toLowerCase(), t.slug));
+  (treatmentsList || []).forEach((t) => map.set(t.slug.toLowerCase(), t.slug));
+  return Array.from(map.values()).map((slug) => ({ slug }));
 }
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const cleanSlug = (slug || "").trim().toLowerCase();
+  const treatmentsList = await getTreatments().catch(() => localTreatments);
+  let treatment = treatmentsList.find((t) => t.slug.toLowerCase() === cleanSlug);
+  if (!treatment) {
+    treatment = localTreatments.find((t) => t.slug.toLowerCase() === cleanSlug);
+  }
+
+  const metadata = buildHreflang(`/treatments/${cleanSlug}/`);
+  return {
+    ...metadata,
+    title: treatment ? `${treatment.title} | Dr. Manjinder Sandhu` : undefined,
+    description: treatment?.shortDescription,
+  };
+}
+
 export default async function TreatmentDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const t = treatments.find((t) => t.slug === slug);
-  if (!t) notFound();
-  const v = careVisuals[slug];
+  const cleanSlug = (slug || "").trim().toLowerCase();
+  const treatmentsList = await getTreatments().catch(() => localTreatments);
+  
+  // Merge CMS and local treatments list, prioritizing CMS version for duplicate slugs
+  const map = new Map<string, typeof localTreatments[0]>();
+  localTreatments.forEach((item) => map.set(item.slug.toLowerCase(), item));
+  (treatmentsList || []).forEach((item) => map.set(item.slug.toLowerCase(), item));
+  const list = Array.from(map.values());
+
+  const tData = map.get(cleanSlug);
+
+  if (!tData) {
+    notFound();
+  }
+
+  const defaultVisual = {
+    image: "/images/radial-angioplasty-and-tenting.png",
+    alt: tData.title,
+    title: tData.title,
+    summary: tData.shortDescription,
+    focus: "Cardiovascular Care",
+    approach: "Specialist Treatment",
+  };
+
+  const v = careVisuals[cleanSlug] || defaultVisual;
+
   const treatmentFaqs = [
-    ...t.faqs,
+    ...(tData.faqs || []),
     {
       question: "How is the right treatment option decided?",
       answer:
@@ -41,11 +94,12 @@ export default async function TreatmentDetailPage({
         "Send an appointment request through the form, call the appointment desk, or use WhatsApp. The team will confirm the time and location with you.",
     },
   ].slice(0, 5);
+
   return (
     <div>
       <VisualIntro
-        label={`${t.category} CARDIOLOGY`}
-        title={t.title}
+        label={`${tData.category} CARDIOLOGY`}
+        title={tData.title}
         description={v.summary}
         image={v.image}
         alt={v.alt}
@@ -60,6 +114,7 @@ export default async function TreatmentDetailPage({
           About this treatment ↓
         </Link>
       </VisualIntro>
+
       <div className="container-custom">
         <dl className="care-at-glance">
           <div>
@@ -79,23 +134,24 @@ export default async function TreatmentDetailPage({
           </div>
         </dl>
       </div>
+
       <section className="section-padding" id="treatment-details">
         <div className="container-custom care-detail-layout">
           <div>
             <span className="eyebrow-pill">ABOUT THIS TREATMENT</span>
             <h2>What you need to know.</h2>
-            <p className="care-detail-lead">{t.shortDescription}</p>
+            <p className="care-detail-lead">{tData.shortDescription}</p>
             <div className="care-disclosures">
               {[
                 {
                   title: "Understanding the treatment",
-                  content: <p>{t.fullOverview}</p>,
+                  content: <p>{tData.fullOverview}</p>,
                 },
                 {
                   title: "Who may benefit?",
                   content: (
                     <ul>
-                      {t.whoNeedsIt.map((item) => (
+                      {tData.whoNeedsIt.map((item) => (
                         <li key={item}>{item}</li>
                       ))}
                     </ul>
@@ -103,17 +159,17 @@ export default async function TreatmentDetailPage({
                 },
                 {
                   title: "What happens during treatment?",
-                  content: <p>{t.procedureSummary}</p>,
+                  content: <p>{tData.procedureSummary}</p>,
                 },
                 {
                   title: "Recovery & follow-up",
-                  content: <p>{t.recoveryTimeline}</p>,
+                  content: <p>{tData.recoveryTimeline}</p>,
                 },
                 {
                   title: "Benefits of this approach",
                   content: (
                     <ul>
-                      {t.benefits.map((item) => (
+                      {tData.benefits.map((item) => (
                         <li key={item}>{item}</li>
                       ))}
                     </ul>
@@ -152,13 +208,15 @@ export default async function TreatmentDetailPage({
           </aside>
         </div>
       </section>
-      {slug === "radial-angiography-angioplasty" && (
+
+      {cleanSlug === "radial-angiography-angioplasty" && (
         <section className="section-padding section-soft">
           <div className="container-custom">
             <TransradialRecoveryTimeline />
           </div>
         </section>
       )}
+
       <section className="section-padding">
         <div className="container-custom care-faq-layout">
           <div>
@@ -176,6 +234,7 @@ export default async function TreatmentDetailPage({
           />
         </div>
       </section>
+
       <section className="section-padding section-soft">
         <div className="container-custom">
           <div className="section-heading">
@@ -185,28 +244,38 @@ export default async function TreatmentDetailPage({
             </Link>
           </div>
           <div className="related-care-grid">
-            {treatments
-              .filter((r) => r.slug !== slug)
+            {list
+              .filter((r) => r.slug.toLowerCase() !== cleanSlug)
               .slice(0, 3)
-              .map((r) => (
-                <Link key={r.id} href={`/treatments/${r.slug}`}>
-                  <img
-                    src={careVisuals[r.slug].image}
-                    alt={careVisuals[r.slug].alt}
-                    width={600}
-                    height={350}
-                    loading="lazy"
-                  />
-                  <span className="eyebrow-pill">{r.category}</span>
-                  <h3>
-                    {careVisuals[r.slug].title} <ArrowUpRight size={19} />
-                  </h3>
-                  <p>{careVisuals[r.slug].summary}</p>
-                </Link>
-              ))}
+              .map((r) => {
+                const rVis = careVisuals[r.slug] || {
+                  image: "/images/radial-angioplasty-and-tenting.png",
+                  alt: r.title,
+                  title: r.title,
+                  summary: r.shortDescription,
+                };
+
+                return (
+                  <Link key={r.id} href={`/treatments/${r.slug}`}>
+                    <img
+                      src={rVis.image}
+                      alt={rVis.alt}
+                      width={600}
+                      height={350}
+                      loading="lazy"
+                    />
+                    <span className="eyebrow-pill">{r.category}</span>
+                    <h3>
+                      {rVis.title} <ArrowUpRight size={19} />
+                    </h3>
+                    <p>{rVis.summary}</p>
+                  </Link>
+                );
+              })}
           </div>
         </div>
       </section>
     </div>
   );
 }
+

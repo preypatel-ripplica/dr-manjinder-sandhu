@@ -6,6 +6,7 @@ import { MotionEffects } from "@/components/MotionEffects";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { I18nProvider } from "@/components/I18nProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.drmanjindersandhu.com"),
@@ -39,17 +40,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <a href="#main-content" className="skip-link">
-          Skip to content
-        </a>
-        <MotionEffects />
-        <NavigationMotion />
-        <Header />
-        <main id="main-content" tabIndex={-1} style={{ flex: 1 }}>
-          {children}
-        </main>
-        <Footer />
-        <FloatingWhatsApp />
+        <I18nProvider>
+          <a href="#main-content" className="skip-link">
+            Skip to content
+          </a>
+          <MotionEffects />
+          <NavigationMotion />
+          <Header />
+          <main id="main-content" tabIndex={-1} style={{ flex: 1 }}>
+            {children}
+          </main>
+          <Footer />
+          <FloatingWhatsApp />
+        </I18nProvider>
       </body>
     </html>
   );

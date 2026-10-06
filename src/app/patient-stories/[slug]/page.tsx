@@ -2,12 +2,30 @@ import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { caseStudies } from "@/data/case-studies";
+import { buildHreflang } from "@/lib/seo";
+import type { Metadata } from "next";
 import { CheckCircle2, ShieldCheck, ArrowRight, Calendar } from "lucide-react";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({
     slug: cs.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const caseItem = caseStudies.find((cs) => cs.slug === slug);
+
+  const metadata = buildHreflang(`/patient-stories/${slug}/`);
+  return {
+    ...metadata,
+    title: caseItem ? `${caseItem.condition} | Dr. Manjinder Sandhu` : undefined,
+    description: caseItem?.summary,
+  };
 }
 
 interface PageProps {

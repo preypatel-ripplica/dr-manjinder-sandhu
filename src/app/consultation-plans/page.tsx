@@ -1,18 +1,12 @@
-"use client";
-
-import React, { useState } from "react";
-import { CheckCircle2, Calendar, ShieldCheck, Heart, Info } from "lucide-react";
+import React from "react";
+import { CheckCircle2, Info } from "lucide-react";
 import { consultationPlans } from "@/data/consultation-plans";
-import { BookingModal } from "@/components/BookingModal";
+import { PlanBookingButton } from "@/components/PlanBookingButton";
+import { buildHreflang } from "@/lib/seo";
+
+export const metadata = buildHreflang("/consultation-plans/");
 
 export default function ConsultationPlansPage() {
-  const [selectedPlanId, setSelectedPlanId] = useState<string>(consultationPlans[0].id);
-  const [bookingModalOpen, setBookingModalOpen] = useState(false);
-
-  const handleBookPlan = (planId: string) => {
-    setSelectedPlanId(planId);
-    setBookingModalOpen(true);
-  };
 
   return (
     <div>
@@ -104,13 +98,11 @@ export default function ConsultationPlansPage() {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => handleBookPlan(plan.id)}
-                  className={plan.isFeatured ? "btn-primary" : "btn-outline"}
-                  style={{ width: "100%", justifyContent: "center", padding: "0.85rem" }}
-                >
-                  <Calendar size={16} /> {plan.ctaLabel}
-                </button>
+                <PlanBookingButton
+                  planTitle={plan.title}
+                  ctaLabel={plan.ctaLabel}
+                  isFeatured={plan.isFeatured}
+                />
               </div>
             ))}
           </div>
@@ -135,12 +127,6 @@ export default function ConsultationPlansPage() {
           </div>
         </div>
       </section>
-
-      <BookingModal
-        isOpen={bookingModalOpen}
-        onClose={() => setBookingModalOpen(false)}
-        preSelectedPlan={consultationPlans.find((plan) => plan.id === selectedPlanId)?.title}
-      />
     </div>
   );
 }

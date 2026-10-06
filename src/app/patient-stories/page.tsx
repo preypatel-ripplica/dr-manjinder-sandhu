@@ -1,14 +1,13 @@
-"use client";
-
 import { VisualIntro } from "@/components/VisualIntro";
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { caseStudies } from "@/data/case-studies";
-import { ArrowRight, UserCheck, ShieldCheck, CheckCircle2 } from "lucide-react";
-import { BookingModal } from "@/components/BookingModal";
+import { ArrowRight } from "lucide-react";
+import { buildHreflang } from "@/lib/seo";
+
+export const metadata = buildHreflang("/patient-stories/");
 
 export default function PatientStoriesPage() {
-  const [bookingModalOpen, setBookingModalOpen] = useState(false);
 
   return (
     <div>
@@ -133,11 +132,6 @@ export default function PatientStoriesPage() {
           </div>
         </div>
       </section>
-
-      <BookingModal
-        isOpen={bookingModalOpen}
-        onClose={() => setBookingModalOpen(false)}
-      />
     </div>
   );
 }

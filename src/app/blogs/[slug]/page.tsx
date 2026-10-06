@@ -1,11 +1,32 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { blogs } from "@/data/blogs";
+import { getBlogPosts } from "@/lib/cms";
+import { buildHreflang } from "@/lib/seo";
+import type { Metadata } from "next";
 import { blogVisuals } from "@/data/care-visuals";
 import { FAQAccordion } from "@/components/FAQAccordion";
-export function generateStaticParams() {
+
+export async function generateStaticParams() {
+  const blogs = await getBlogPosts();
   return blogs.map((b) => ({ slug: b.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const blogs = await getBlogPosts();
+  const post = blogs.find((b) => b.slug === slug);
+
+  const metadata = buildHreflang(`/blogs/${slug}/`);
+  return {
+    ...metadata,
+    title: post ? `${post.title} | Dr. Manjinder Sandhu` : undefined,
+    description: post?.excerpt,
+  };
 }
 export default async function BlogPostDetailPage({
   params,
@@ -13,6 +34,7 @@ export default async function BlogPostDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const blogs = await getBlogPosts();
   const post = blogs.find((b) => b.slug === slug);
   if (!post) notFound();
   const visual = blogVisuals[slug];
@@ -162,7 +184,7 @@ export default async function BlogPostDetailPage({
           </div>
           <div className="editorial-grid">
             {blogs
-              .filter((b) => b.slug !== slug)
+            .filter((b) => b.slug !== slug)
               .map((b) => (
                 <article className="editorial-card" key={b.id}>
                   <Link href={`/blogs/${b.slug}`}>

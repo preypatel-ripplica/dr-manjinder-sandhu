@@ -1,10 +1,11 @@
-"use client";
-import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { doctorProfile } from "@/data/doctor-profile";
-import { BookingModal } from "@/components/BookingModal";
+import { BookAppointmentButton } from "@/components/BookAppointmentButton";
+import { buildHreflang } from "@/lib/seo";
+
+export const metadata = buildHreflang("/about-us/");
+
 export default function AboutUsPage() {
-  const [bookingOpen, setBookingOpen] = useState(false);
   return (
     <div>
       <section className="section-padding about-intro">
@@ -40,12 +41,7 @@ export default function AboutUsPage() {
               He brings a personal approach to specialist care across Gurugram,
               Manesar, and Delhi.
             </p>
-            <button
-              className="btn-primary"
-              onClick={() => setBookingOpen(true)}
-            >
-              Book appointment <ArrowUpRight size={17} />
-            </button>
+            <BookAppointmentButton label="Book appointment" />
           </div>
         </div>
       </section>
@@ -111,10 +107,6 @@ export default function AboutUsPage() {
           </div>
         </div>
       </section>
-      <BookingModal
-        isOpen={bookingOpen}
-        onClose={() => setBookingOpen(false)}
-      />
     </div>
   );
 }

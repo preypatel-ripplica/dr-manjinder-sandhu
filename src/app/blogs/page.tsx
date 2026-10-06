@@ -1,10 +1,16 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { blogs } from "@/data/blogs";
+import { getBlogPosts } from "@/lib/cms";
 import { blogVisuals } from "@/data/care-visuals";
-export default function BlogsPage() {
+
+export default async function BlogsPage() {
+  const blogs = await getBlogPosts();
   const featured = blogs[0];
-  const visual = blogVisuals[featured.slug];
+  const visual = blogVisuals[featured.slug] ?? {
+    image: "/images/heart-consultation.jpg",
+    alt: featured.title,
+    caption: featured.excerpt,
+  };
   return (
     <div>
       <section className="journal-heading">
@@ -63,30 +69,36 @@ export default function BlogsPage() {
             </span>
           </div>
           <div className="editorial-grid">
-            {blogs.slice(1).map((post) => (
-              <article className="editorial-card" key={post.id}>
-                <Link href={`/blogs/${post.slug}`} aria-label={post.title}>
-                  <img
-                    src={blogVisuals[post.slug].image}
-                    alt={blogVisuals[post.slug].alt}
-                    width={800}
-                    height={500}
-                    loading="lazy"
-                  />
-                </Link>
-                <div className="article-meta">
-                  <span className="eyebrow-pill">{post.category}</span>
-                  <span>{post.readTime}</span>
-                </div>
-                <h3>
-                  <Link href={`/blogs/${post.slug}`}>{post.title}</Link>
-                </h3>
-                <p>{post.excerpt}</p>
-                <Link className="quiet-link" href={`/blogs/${post.slug}`}>
-                  Read article <ArrowUpRight size={16} />
-                </Link>
-              </article>
-            ))}
+            {blogs.slice(1).map((post) => {
+              const postVisual = blogVisuals[post.slug] ?? {
+                image: "/images/heart-consultation.jpg",
+                alt: post.title,
+              };
+              return (
+                <article className="editorial-card" key={post.id}>
+                  <Link href={`/blogs/${post.slug}`} aria-label={post.title}>
+                    <img
+                      src={postVisual.image}
+                      alt={postVisual.alt}
+                      width={800}
+                      height={500}
+                      loading="lazy"
+                    />
+                  </Link>
+                  <div className="article-meta">
+                    <span className="eyebrow-pill">{post.category}</span>
+                    <span>{post.readTime}</span>
+                  </div>
+                  <h3>
+                    <Link href={`/blogs/${post.slug}`}>{post.title}</Link>
+                  </h3>
+                  <p>{post.excerpt}</p>
+                  <Link className="quiet-link" href={`/blogs/${post.slug}`}>
+                    Read article <ArrowUpRight size={16} />
+                  </Link>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

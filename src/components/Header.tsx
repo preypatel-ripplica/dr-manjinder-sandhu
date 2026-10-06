@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, Phone, ArrowUpRight } from "lucide-react";
 import { BookingModal } from "./BookingModal";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useI18n } from "./I18nProvider";
 import { treatments } from "@/data/treatments";
 
 const healthCareLinks = [
@@ -16,6 +18,7 @@ const healthCareLinks = [
 
 export function Header() {
   const pathname = usePathname();
+  const { t, localizeHref } = useI18n();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [treatmentsOpen, setTreatmentsOpen] = useState(false);
   const [careOpen, setCareOpen] = useState(false);
@@ -24,11 +27,13 @@ export function Header() {
   const treatmentsRef = useRef<HTMLDivElement>(null);
   const careButton = useRef<HTMLButtonElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
     setMobileOpen(false);
     setTreatmentsOpen(false);
     setCareOpen(false);
   }, [pathname]);
+
   useEffect(() => {
     function close(event: PointerEvent) {
       if (!careRef.current?.contains(event.target as Node)) setCareOpen(false);
@@ -55,15 +60,17 @@ export function Header() {
       document.removeEventListener("keydown", escape);
     };
   }, [careOpen, mobileOpen, treatmentsOpen]);
+
   const active = (href: string) =>
-    pathname === href ? ("page" as const) : undefined;
+    pathname === localizeHref(href) ? ("page" as const) : undefined;
+
   return (
     <>
       <div className="utility-bar">
         <div className="container-custom utility-inner">
           <span>
-            CARDIOLOGY CARE{" "}
-            <span className="utility-location"> · Gurugram & Delhi NCR</span>
+            {t("CARDIOLOGY CARE")}{" "}
+            <span className="utility-location">{t("· Gurugram & Delhi NCR")}</span>
           </span>
           <a href="tel:+918130370096">
             <Phone size={13} /> +91 81303 70096
@@ -74,17 +81,25 @@ export function Header() {
         <div className="container-custom header-inner">
           <Link
             className="brand"
-            href="/"
-            aria-label="Dr. Manjinder Sandhu, home"
+            href={localizeHref("/")}
+            aria-label={t("Dr. Manjinder Sandhu, home")}
           >
-            <span className="brand-text"><span className="wordmark-name"><span className="wordmark-prefix">Dr.</span> Manjinder <strong>Sandhu<span className="wordmark-period">.</span></strong></span><small>INTERVENTIONAL CARDIOLOGIST</small></span>
+            <span className="brand-text">
+              <span className="wordmark-name">
+                <span className="wordmark-prefix">Dr.</span> Manjinder{" "}
+                <strong>
+                  Sandhu<span className="wordmark-period">.</span>
+                </strong>
+              </span>
+              <small>{t("INTERVENTIONAL CARDIOLOGIST")}</small>
+            </span>
           </Link>
-          <nav className="main-nav" aria-label="Main navigation">
-            <Link href="/" aria-current={active("/")}>
-              Home
+          <nav className="main-nav" aria-label={t("Main navigation")}>
+            <Link href={localizeHref("/")} aria-current={active("/")}>
+              {t("Home")}
             </Link>
-            <Link href="/about-us" aria-current={active("/about-us")}>
-              About
+            <Link href={localizeHref("/about-us")} aria-current={active("/about-us")}>
+              {t("About")}
             </Link>
             <div
               className="nav-dropdown nav-treatment-dropdown"
@@ -96,13 +111,17 @@ export function Header() {
                   setTreatmentsOpen(false);
               }}
             >
-              <Link href="/treatments" aria-current={active("/treatments")} onFocus={() => setTreatmentsOpen(true)}>
-                Treatments
+              <Link
+                href={localizeHref("/treatments")}
+                aria-current={active("/treatments")}
+                onFocus={() => setTreatmentsOpen(true)}
+              >
+                {t("Treatments")}
               </Link>
               <button
                 className="nav-caret-button"
                 onClick={() => setTreatmentsOpen(!treatmentsOpen)}
-                aria-label="Open treatments menu"
+                aria-label={t("Open treatments menu")}
                 aria-expanded={treatmentsOpen}
                 aria-controls="treatments-navigation"
               >
@@ -117,18 +136,18 @@ export function Header() {
               >
                 <Link
                   className="dropdown-overview"
-                  href="/treatments"
+                  href={localizeHref("/treatments")}
                   onClick={() => setTreatmentsOpen(false)}
                 >
-                  All treatments <ArrowUpRight size={14} />
+                  {t("All treatments")} <ArrowUpRight size={14} />
                 </Link>
                 {treatments.map((treatment) => (
                   <Link
                     key={treatment.id}
-                    href={`/treatments/${treatment.slug}`}
+                    href={localizeHref(`/treatments/${treatment.slug}`)}
                     onClick={() => setTreatmentsOpen(false)}
                   >
-                    <span>{treatment.title}</span>
+                    <span>{t(treatment.title)}</span>
                     <ArrowUpRight size={14} />
                   </Link>
                 ))}
@@ -150,7 +169,7 @@ export function Header() {
                 aria-expanded={careOpen}
                 aria-controls="care-navigation"
               >
-                Care <ChevronDown size={14} />
+                {t("Care")} <ChevronDown size={14} />
               </button>
               <div
                 className="nav-dropdown-panel"
@@ -162,33 +181,34 @@ export function Header() {
                 {healthCareLinks.map(([label, href]) => (
                   <Link
                     key={href}
-                    href={href}
+                    href={localizeHref(href)}
                     onClick={() => setCareOpen(false)}
                   >
-                    {label}
+                    {t(label)}
                     <ArrowUpRight size={14} />
                   </Link>
                 ))}
               </div>
             </div>
-            <Link href="/blogs" aria-current={active("/blogs")}>
-              Blogs
+            <Link href={localizeHref("/blogs")} aria-current={active("/blogs")}>
+              {t("Blogs")}
             </Link>
-            <Link href="/contact-us" aria-current={active("/contact-us")}>
-              Contact
+            <Link href={localizeHref("/contact-us")} aria-current={active("/contact-us")}>
+              {t("Contact")}
             </Link>
           </nav>
           <div className="header-actions">
+            <LanguageSwitcher />
             <button
               className="btn-primary header-book"
               onClick={() => setBookingOpen(true)}
             >
-              Book appointment <ArrowUpRight size={16} />
+              {t("Book appointment")} <ArrowUpRight size={16} />
             </button>
             <button
               ref={menuButton}
               className="menu-toggle"
-              aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+              aria-label={mobileOpen ? t("Close navigation") : t("Open navigation")}
               aria-expanded={mobileOpen}
               aria-controls="mobile-navigation"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -203,23 +223,23 @@ export function Header() {
           inert={!mobileOpen}
           aria-hidden={!mobileOpen}
           id="mobile-navigation"
-          aria-label="Mobile navigation"
+          aria-label={t("Mobile navigation")}
         >
           {[
-            ["Home", "/"],
-            ["About", "/about-us"],
-            ["Treatments", "/treatments"],
+            [t("Home"), "/"],
+            [t("About"), "/about-us"],
+            [t("Treatments"), "/treatments"],
             ...treatments.map((treatment) => [
-              `— ${treatment.title}`,
+              `— ${t(treatment.title)}`,
               `/treatments/${treatment.slug}`,
             ]),
-            ...healthCareLinks,
-            ["Blogs", "/blogs"],
-            ["Contact & locations", "/contact-us"],
+            ...healthCareLinks.map(([l, h]) => [t(l), h]),
+            [t("Blogs"), "/blogs"],
+            [t("Contact & locations"), "/contact-us"],
           ].map(([label, href]) => (
             <Link
               key={href}
-              href={href}
+              href={localizeHref(href)}
               aria-current={active(href)}
               onClick={() => setMobileOpen(false)}
             >
@@ -234,7 +254,7 @@ export function Header() {
               setBookingOpen(true);
             }}
           >
-            Book appointment
+            {t("Book appointment")}
           </button>
         </nav>
       </header>

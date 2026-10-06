@@ -2,15 +2,8 @@
 
 import React, { useState } from "react";
 import { usePanelMotion } from "@/hooks/usePanelMotion";
-import {
-  Sparkles,
-  Clock,
-  CheckCircle2,
-  ShieldCheck,
-  Heart,
-  AlertCircle,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { useI18n } from "./I18nProvider";
 
 interface RecoveryStage {
   timeLabel: string;
@@ -91,39 +84,40 @@ const recoveryStages: RecoveryStage[] = [
 export function TransradialRecoveryTimeline() {
   const [activeStage, setActiveStage] = useState(0);
   const panelRef = usePanelMotion(activeStage);
+  const { t } = useI18n();
   const stage = recoveryStages[activeStage];
+
   return (
     <div className="recovery-guide">
-      <span className="eyebrow-pill">AFTER ANGIOPLASTY</span>
-      <h2>Recovery, step by step.</h2>
+      <span className="eyebrow-pill">{t("AFTER ANGIOPLASTY")}</span>
+      <h2>{t("Recovery, step by step.")}</h2>
       <p className="recovery-intro">
-        Explore the recovery stages for wrist and groin access. Your clinical
-        team will explain your individual recovery plan.
+        {t("Explore the recovery stages for wrist and groin access. Your clinical team will explain your individual recovery plan.")}
       </p>
-      <div className="recovery-stages" role="group" aria-label="Recovery stage">
+      <div className="recovery-stages" role="group" aria-label={t("Recovery stage")}>
         {recoveryStages.map((item, i) => (
           <button
             key={item.hour}
             aria-pressed={activeStage === i}
             onClick={() => setActiveStage(i)}
           >
-            <span>Stage {i + 1}</span>
-            <strong>{item.timeLabelShort || `Hour ${item.hour}`}</strong>
+            <span>{t("Stage")} {i + 1}</span>
+            <strong>{t(item.timeLabelShort || `Hour ${item.hour}`)}</strong>
           </button>
         ))}
       </div>
       <div ref={panelRef} className="recovery-comparison" aria-live="polite">
         <article>
-          <span className="eyebrow-pill">WRIST ACCESS</span>
-          <h3>{stage.radialTitle}</h3>
-          <p>{stage.radialDesc}</p>
-          <p className="recovery-status">{stage.radialStatus}</p>
+          <span className="eyebrow-pill">{t("WRIST ACCESS")}</span>
+          <h3>{t(stage.radialTitle)}</h3>
+          <p>{t(stage.radialDesc)}</p>
+          <p className="recovery-status">{t(stage.radialStatus)}</p>
         </article>
         <article>
-          <span className="eyebrow-pill">GROIN ACCESS</span>
-          <h3>{stage.femoralTitle}</h3>
-          <p>{stage.femoralDesc}</p>
-          <p className="recovery-status">{stage.femoralStatus}</p>
+          <span className="eyebrow-pill">{t("GROIN ACCESS")}</span>
+          <h3>{t(stage.femoralTitle)}</h3>
+          <p>{t(stage.femoralDesc)}</p>
+          <p className="recovery-status">{t(stage.femoralStatus)}</p>
         </article>
       </div>
       <button
@@ -132,7 +126,7 @@ export function TransradialRecoveryTimeline() {
           setActiveStage((activeStage + 1) % recoveryStages.length)
         }
       >
-        Next stage <ArrowRight size={16} />
+        {t("Next stage")} <ArrowRight size={16} />
       </button>
     </div>
   );

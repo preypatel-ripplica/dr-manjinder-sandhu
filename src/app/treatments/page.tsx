@@ -2,7 +2,11 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { TreatmentsFilterGrid } from "@/components/TreatmentsFilterGrid";
 import { VisualIntro } from "@/components/VisualIntro";
-export default function TreatmentsIndexPage() {
+import { getTreatments } from "@/lib/cms";
+
+export default async function TreatmentsIndexPage() {
+  const treatments = await getTreatments();
+
   return (
     <div>
       <VisualIntro
@@ -12,7 +16,7 @@ export default function TreatmentsIndexPage() {
       />
       <section className="section-padding">
         <div className="container-custom">
-          <TreatmentsFilterGrid />
+          <TreatmentsFilterGrid items={treatments} />
         </div>
       </section>
       <section className="simple-cta">

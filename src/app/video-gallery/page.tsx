@@ -1,7 +1,10 @@
 import { PageIntro } from "@/components/PageIntro";
 import { VideoCard } from "@/components/VideoCard";
-import { doctorVideos } from "@/data/videos";
-export default function VideoGalleryPage() {
+import { getGalleryVideos } from "@/lib/cms";
+
+export default async function VideoGalleryPage() {
+  const doctorVideos = await getGalleryVideos();
+
   return (
     <div>
       <PageIntro

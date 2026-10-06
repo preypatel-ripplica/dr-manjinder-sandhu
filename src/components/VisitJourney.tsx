@@ -1,8 +1,11 @@
 "use client";
+
 import { useState } from "react";
 import { usePanelMotion } from "@/hooks/usePanelMotion";
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
+import { useI18n } from "./I18nProvider";
+
 const steps = [
   {
     label: "Before your visit",
@@ -41,24 +44,27 @@ const steps = [
     alt: "Illustrative clinician using a phone to review care information",
   },
 ];
+
 export function VisitJourney() {
   const [active, setActive] = useState(0);
   const panelRef = usePanelMotion(active);
+  const { t, localizeHref } = useI18n();
   const step = steps[active];
+
   return (
     <section className="section-padding journey-section">
       <div className="container-custom">
         <div className="section-heading">
           <div>
-            <span className="eyebrow-pill">YOUR VISIT, MADE SIMPLE</span>
-            <h2>Know what to expect.</h2>
+            <span className="eyebrow-pill">{t("YOUR VISIT, MADE SIMPLE")}</span>
+            <h2>{t("Know what to expect.")}</h2>
           </div>
-          <p>Three steps. A more reassuring experience.</p>
+          <p>{t("Three steps. A more reassuring experience.")}</p>
         </div>
         <div
           className="journey-controls"
           role="group"
-          aria-label="Explore your visit"
+          aria-label={t("Explore your visit")}
         >
           {steps.map((s, i) => (
             <button
@@ -68,12 +74,12 @@ export function VisitJourney() {
               onClick={() => setActive(i)}
             >
               <span>0{i + 1}</span>
-              {s.label}
+              {t(s.label)}
             </button>
           ))}
         </div>
         <div
-        ref={panelRef}
+          ref={panelRef}
           className="journey-panel"
           id="visit-panel"
           aria-live="polite"
@@ -82,24 +88,24 @@ export function VisitJourney() {
           <img
             key={step.image}
             src={step.image}
-            alt={step.alt}
+            alt={t(step.alt)}
             width={800}
             height={600}
             loading="lazy"
           />
           <div className="panel-copy" key={active}>
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
+            <h3>{t(step.title)}</h3>
+            <p>{t(step.text)}</p>
             <ul>
               {step.items.map((item) => (
                 <li key={item}>
                   <Check size={17} />
-                  {item}
+                  {t(item)}
                 </li>
               ))}
             </ul>
-            <Link className="text-link" href="/contact-us">
-              Plan your visit <ArrowUpRight size={17} />
+            <Link className="text-link" href={localizeHref("/contact-us")}>
+              {t("Plan your visit")} <ArrowUpRight size={17} />
             </Link>
           </div>
         </div>

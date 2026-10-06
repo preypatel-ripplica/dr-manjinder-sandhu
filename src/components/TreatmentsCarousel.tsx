@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, CheckCircle2, ArrowRight, Zap } from "lucide-react";
 import { treatments } from "@/data/treatments";
+import { useI18n } from "@/components/I18nProvider";
 
 export const TreatmentsCarousel: React.FC = () => {
+  const { t, localizeHref } = useI18n();
   const [activeIndex, setActiveIndex] = useState(0);
 
   const showPrevious = () => {
@@ -34,15 +36,15 @@ export const TreatmentsCarousel: React.FC = () => {
       }}>
         <div>
           <span className="eyebrow-pill" style={{ marginBottom: "0.5rem" }}>
-            SPECIALIZED CARDIOLOGY
+            {t("SPECIALIZED CARDIOLOGY")}
           </span>
           <h2 style={{ fontSize: "2.2rem", color: "var(--secondary)", marginTop: "0.4rem" }}>
-            Key Cardiology <span style={{ color: "var(--primary)" }}>Treatments</span>
+            {t("Key Cardiology")} <span style={{ color: "var(--primary)" }}>{t("Treatments")}</span>
           </h2>
         </div>
 
         <p style={{ color: "var(--text-body)", fontSize: "1rem", maxWidth: "520px" }}>
-          Clear interventional care pathways for common heart concerns, from initial ECG diagnostic evaluation to wrist stenting, valve replacement, and long-term recovery.
+          {t("Clear interventional care pathways for common heart concerns, from initial ECG diagnostic evaluation to wrist stenting, valve replacement, and long-term recovery.")}
         </p>
       </div>
 
@@ -76,7 +78,7 @@ export const TreatmentsCarousel: React.FC = () => {
             <div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
                 <span className="eyebrow-pill" style={{ fontSize: "0.875rem" }}>
-                  {item.category.toUpperCase()} CARDIOLOGY
+                  {t(item.category.toUpperCase())} {t("CARDIOLOGY")}
                 </span>
                 <div style={{
                   width: "36px",
@@ -93,15 +95,15 @@ export const TreatmentsCarousel: React.FC = () => {
               </div>
 
               <h3 style={{ fontSize: "1.3rem", color: "var(--secondary)", marginBottom: "0.5rem", lineHeight: 1.3 }}>
-                {item.title}
+                {t(item.title)}
               </h3>
 
               <p style={{ color: "var(--primary)", fontSize: "1rem", fontWeight: 600, marginBottom: "1rem" }}>
-                {item.tagline}
+                {t(item.tagline)}
               </p>
 
               <p style={{ color: "var(--text-body)", fontSize: "1rem", lineHeight: 1.5, marginBottom: "1.25rem" }}>
-                {item.shortDescription}
+                {t(item.shortDescription)}
               </p>
 
               <div style={{ borderTop: "1px solid var(--border-color)", paddingTop: "1rem", marginBottom: "1.25rem" }}>
@@ -109,7 +111,7 @@ export const TreatmentsCarousel: React.FC = () => {
                   {item.benefits.slice(0, 2).map((b, i) => (
                     <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.4rem", fontSize: "1rem", color: "var(--text-body)" }}>
                       <CheckCircle2 size={14} style={{ color: "var(--primary)", flexShrink: 0, marginTop: "2px" }} />
-                      <span>{b}</span>
+                      <span>{t(b)}</span>
                     </li>
                   ))}
                 </ul>
@@ -117,11 +119,11 @@ export const TreatmentsCarousel: React.FC = () => {
             </div>
 
             <Link
-              href={`/treatments/${item.slug}`}
+              href={localizeHref(`/treatments/${item.slug}`)}
               className={item.isCenter ? "btn-primary" : "btn-outline"}
               style={{ width: "100%", justifyContent: "center", padding: "0.75rem", fontSize: "1rem" }}
             >
-              <span>Explore Treatment</span>
+              <span>{t("Explore Treatment")}</span>
               <ArrowRight size={15} />
             </Link>
           </div>
@@ -130,8 +132,8 @@ export const TreatmentsCarousel: React.FC = () => {
 
       {/* Carousel Navigation Footer */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Link href="/treatments" className="btn-outline">
-          View all treatments <ArrowRight size={16} />
+        <Link href={localizeHref("/treatments")} className="btn-outline">
+          {t("View all treatments")} <ArrowRight size={16} />
         </Link>
 
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
@@ -180,3 +182,4 @@ export const TreatmentsCarousel: React.FC = () => {
     </div>
   );
 };
+

@@ -2,14 +2,34 @@ import React from "react";
 import { VisualIntro } from "@/components/VisualIntro";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { procedures } from "@/data/procedures";
+import { getProcedures } from "@/lib/cms";
+import { buildHreflang } from "@/lib/seo";
+import type { Metadata } from "next";
 import { ProcedureStepper } from "@/components/ProcedureStepper";
 import { Clock, ShieldCheck, ArrowRight, Heart } from "lucide-react";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const procedures = await getProcedures();
   return procedures.map((p) => ({
     slug: p.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const procedures = await getProcedures();
+  const procedure = procedures.find((p) => p.slug === slug);
+
+  const metadata = buildHreflang(`/procedures/${slug}/`);
+  return {
+    ...metadata,
+    title: procedure ? `${procedure.title} | Dr. Manjinder Sandhu` : undefined,
+    description: procedure?.overview,
+  };
 }
 
 interface PageProps {
@@ -18,6 +38,7 @@ interface PageProps {
 
 export default async function ProcedureDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  const procedures = await getProcedures();
   const procedure = procedures.find((p) => p.slug === slug);
 
   if (!procedure) {

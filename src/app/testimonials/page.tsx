@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { PageIntro } from "@/components/PageIntro";
 import { PatientReel } from "@/components/PatientReel";
+import { buildHreflang } from "@/lib/seo";
+
+export const metadata = buildHreflang("/testimonials/");
 export default function TestimonialsPage() {
   return (
     <div>

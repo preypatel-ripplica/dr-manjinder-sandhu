@@ -1,20 +1,10 @@
-"use client";
-
 import { VisualIntro } from "@/components/VisualIntro";
-import React, { useState } from "react";
 import Link from "next/link";
-import {
-  ArrowRight,
-  Clock,
-  ShieldCheck,
-  CheckCircle2,
-  Calendar,
-} from "lucide-react";
-import { procedures } from "@/data/procedures";
-import { BookingModal } from "@/components/BookingModal";
+import { ArrowRight } from "lucide-react";
+import { getProcedures } from "@/lib/cms";
 
-export default function ProceduresIndexPage() {
-  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+export default async function ProceduresIndexPage() {
+  const procedures = await getProcedures();
 
   return (
     <div>
@@ -70,11 +60,6 @@ export default function ProceduresIndexPage() {
           ))}
         </div>
       </section>
-
-      <BookingModal
-        isOpen={bookingModalOpen}
-        onClose={() => setBookingModalOpen(false)}
-      />
     </div>
   );
 }

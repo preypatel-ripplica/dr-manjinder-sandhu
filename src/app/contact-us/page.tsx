@@ -1,6 +1,9 @@
 import { Clock, MapPin, MessageCircle, Phone } from "lucide-react";
 import { AppointmentForm } from "@/components/AppointmentForm";
 import { clinicLocations } from "@/data/clinics";
+import { buildHreflang } from "@/lib/seo";
+
+export const metadata = buildHreflang("/contact-us/");
 export default function ContactUsPage() {
   return (
     <div>

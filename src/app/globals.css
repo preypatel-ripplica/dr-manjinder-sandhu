@@ -382,6 +382,110 @@ button:disabled {
   align-items: center;
   gap: 12px;
 }
+.language-switcher {
+  position: relative;
+  display: inline-block;
+}
+.language-switcher__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  background: #fff;
+  color: var(--secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: all 180ms ease;
+  list-style: none;
+}
+.language-switcher__trigger::-webkit-details-marker {
+  display: none;
+}
+.language-switcher__trigger:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--bg-soft);
+}
+.language-switcher[open] .lang-chevron {
+  transform: rotate(180deg);
+}
+.lang-chevron {
+  transition: transform 200ms ease;
+}
+.language-switcher__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  inset-inline-end: 0;
+  z-index: 200;
+  min-width: 150px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.language-switcher__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 13px;
+  transition: background 150ms ease, color 150ms ease;
+}
+.language-switcher__option small {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.language-switcher__option:hover {
+  background: var(--bg-soft);
+  color: var(--primary);
+}
+.language-switcher__option.is-active {
+  background: var(--primary-light, #fbf0f2);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ─── RTL Directional Overrides ────────────────────────────────────────────── */
+[dir="rtl"] .language-switcher__menu {
+  inset-inline-end: auto;
+  inset-inline-start: 0;
+}
+[dir="rtl"] .nav-dropdown-panel {
+  left: auto;
+  right: -20px;
+}
+[dir="rtl"] .treatment-dropdown-panel {
+  left: auto;
+  right: -18px;
+}
+[dir="rtl"] :is(.text-link, .quiet-link, .btn-primary, .btn-secondary, .btn-outline) > svg:last-child {
+  transform: scaleX(-1);
+}
+[dir="rtl"] :is(.text-link, .quiet-link, .btn-primary, .btn-secondary, .btn-outline):hover > svg:last-child {
+  transform: scaleX(-1) translateX(-4px);
+}
+[dir="rtl"] .whatsapp-float {
+  inset-inline-end: auto;
+  inset-inline-start: 22px;
+}
+[dir="rtl"] .care-path-options button::after {
+  right: auto;
+  left: 18px;
+}
+[dir="rtl"] .care-path-options button {
+  padding: 17px 18px 17px 45px;
+}
 .header-book {
   white-space: nowrap;
   font-size: 13px;

@@ -1,53 +1,83 @@
 import type { MetadataRoute } from "next";
-import { blogs } from "@/data/blogs";
 import { caseStudies } from "@/data/case-studies";
-import { procedures } from "@/data/procedures";
-import { treatments } from "@/data/treatments";
+import { getBlogPosts, getProcedures, getTreatments } from "@/lib/cms";
+import { LOCALES, localizePath } from "@/lib/i18n-config";
+import { BASE_URL } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
-const siteUrl = "https://www.drmanjindersandhu.com";
+function makeEntry(
+  path: string,
+  changeFrequency: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never",
+  priority: number,
+): MetadataRoute.Sitemap {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
 
-function url(path: string) {
-  return `${siteUrl}${path}`;
+  const languages: Record<string, string> = {};
+  for (const locale of LOCALES) {
+    languages[locale.code] = `${BASE_URL}${localizePath(normalizedPath, locale.code)}`;
+  }
+  languages["x-default"] = `${BASE_URL}${localizePath(normalizedPath, "en")}`;
+
+  return LOCALES.map((locale) => {
+    const locUrl = `${BASE_URL}${localizePath(normalizedPath, locale.code)}`;
+    return {
+      url: locUrl,
+      changeFrequency,
+      priority: locale.code === "en" ? priority : Math.max(0.1, priority - 0.1),
+      alternates: {
+        languages,
+      },
+    };
+  });
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const corePages: MetadataRoute.Sitemap = [
-    { url: url("/"), changeFrequency: "weekly", priority: 1 },
-    { url: url("/about-us/"), changeFrequency: "monthly", priority: 0.8 },
-    { url: url("/treatments/"), changeFrequency: "monthly", priority: 0.9 },
-    { url: url("/expertise/"), changeFrequency: "monthly", priority: 0.7 },
-    { url: url("/consultation-plans/"), changeFrequency: "monthly", priority: 0.7 },
-    { url: url("/contact-us/"), changeFrequency: "monthly", priority: 0.8 },
-    { url: url("/blogs/"), changeFrequency: "weekly", priority: 0.8 },
-    { url: url("/procedures/"), changeFrequency: "monthly", priority: 0.7 },
-    { url: url("/patient-stories/"), changeFrequency: "monthly", priority: 0.6 },
-    { url: url("/testimonials/"), changeFrequency: "monthly", priority: 0.5 },
-    { url: url("/video-gallery/"), changeFrequency: "monthly", priority: 0.5 },
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const staticPaths: [string, "weekly" | "monthly", number][] = [
+    ["/", "weekly", 1.0],
+    ["/about-us/", "monthly", 0.8],
+    ["/treatments/", "monthly", 0.9],
+    ["/expertise/", "monthly", 0.7],
+    ["/consultation-plans/", "monthly", 0.7],
+    ["/contact-us/", "monthly", 0.8],
+    ["/blogs/", "weekly", 0.8],
+    ["/procedures/", "monthly", 0.7],
+    ["/patient-stories/", "monthly", 0.6],
+    ["/testimonials/", "monthly", 0.5],
+    ["/video-gallery/", "monthly", 0.5],
   ];
 
+  const [treatments, blogs, procedures] = await Promise.all([
+    getTreatments().catch(() => []),
+    getBlogPosts().catch(() => []),
+    getProcedures().catch(() => []),
+  ]);
+
+  const staticEntries = staticPaths.flatMap(([p, freq, prio]) =>
+    makeEntry(p, freq, prio),
+  );
+
+  const treatmentEntries = treatments.flatMap((t) =>
+    makeEntry(`/treatments/${t.slug}/`, "monthly", 0.8),
+  );
+
+  const blogEntries = blogs.flatMap((b) =>
+    makeEntry(`/blogs/${b.slug}/`, "monthly", 0.7),
+  );
+
+  const procedureEntries = procedures.flatMap((p) =>
+    makeEntry(`/procedures/${p.slug}/`, "monthly", 0.6),
+  );
+
+  const caseStudyEntries = caseStudies.flatMap((cs) =>
+    makeEntry(`/patient-stories/${cs.slug}/`, "monthly", 0.6),
+  );
+
   return [
-    ...corePages,
-    ...treatments.map((treatment) => ({
-      url: url(`/treatments/${treatment.slug}/`),
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    })),
-    ...blogs.map((blog) => ({
-      url: url(`/blogs/${blog.slug}/`),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    })),
-    ...procedures.map((procedure) => ({
-      url: url(`/procedures/${procedure.slug}/`),
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
-    ...caseStudies.map((story) => ({
-      url: url(`/patient-stories/${story.slug}/`),
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
+    ...staticEntries,
+    ...treatmentEntries,
+    ...blogEntries,
+    ...procedureEntries,
+    ...caseStudyEntries,
   ];
 }

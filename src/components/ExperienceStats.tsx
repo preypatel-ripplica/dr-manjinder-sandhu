@@ -1,8 +1,12 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
+import { useI18n } from "./I18nProvider";
+
 function Count({ value, suffix = "" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLElement>(null);
   const [shown, setShown] = useState(value);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let frame = 0;
@@ -18,10 +22,49 @@ function Count({ value, suffix = "" }: { value: number; suffix?: string }) {
       frame = requestAnimationFrame(tick);
     });
     if (ref.current) observer.observe(ref.current);
-    return () => { observer.disconnect(); cancelAnimationFrame(frame); };
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
   }, [value]);
-  return <span ref={ref} aria-label={`${value.toLocaleString("en-IN")}${suffix}`}><span aria-hidden="true">{shown.toLocaleString("en-IN")}{suffix}</span></span>;
+
+  return (
+    <span ref={ref} aria-label={`${value.toLocaleString("en-IN")}${suffix}`}>
+      <span aria-hidden="true" dir="ltr" className="inline-block">
+        {shown.toLocaleString("en-IN")}
+        {suffix}
+      </span>
+    </span>
+  );
 }
+
 export function ExperienceStats() {
-  return <dl className="experience-stats"><div><dt><Count value={33} suffix="+" /></dt><dd>Years of experience</dd></div><div><dt><Count value={25000} suffix="+" /></dt><dd>Cardiac procedures</dd></div><div><dt><Count value={4} /></dt><dd>Locations across Delhi NCR</dd></div><div className="stats-principle"><dt>One person at a time.</dt><dd>That’s how we approach heart care.</dd></div></dl>;
+  const { t } = useI18n();
+
+  return (
+    <dl className="experience-stats">
+      <div>
+        <dt>
+          <Count value={33} suffix="+" />
+        </dt>
+        <dd>{t("Years of experience")}</dd>
+      </div>
+      <div>
+        <dt>
+          <Count value={25000} suffix="+" />
+        </dt>
+        <dd>{t("Cardiac procedures")}</dd>
+      </div>
+      <div>
+        <dt>
+          <Count value={4} />
+        </dt>
+        <dd>{t("Locations across Delhi NCR")}</dd>
+      </div>
+      <div className="stats-principle">
+        <dt>{t("One person at a time.")}</dt>
+        <dd>{t("That’s how we approach heart care.")}</dd>
+      </div>
+    </dl>
+  );
 }
